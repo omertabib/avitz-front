@@ -4,7 +4,6 @@ import {
   VStack,
   Input,
   Button,
-  Text,
   Card,
   HStack,
   Badge,
@@ -25,7 +24,7 @@ const toast = createToaster({
 export const RecordingForm: React.FC = () => {
   const [name, setName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
 
   const isNameValid = name.trim().length >= 2 && name.trim().length <= 50;
 
@@ -55,7 +54,7 @@ export const RecordingForm: React.FC = () => {
 
       // Reset form
       setName("");
-      setAudioUrl(null);
+      setAudioBlob(null);
     } catch (error: any) {
       toast.error({
         title: "Upload failed",
@@ -85,15 +84,14 @@ export const RecordingForm: React.FC = () => {
 
           <ReactMediaRecorder
             audio
-            onStop={(blobUrl, blob) => {
-              setAudioUrl(blobUrl);
+            onStop={(_, blob) => {
+              setAudioBlob(blob);
             }}
             render={({
               status,
               startRecording,
               stopRecording,
               mediaBlobUrl,
-              blob,
             }) => (
               <VStack gap={4} w="full">
                 <Box textAlign="center">
@@ -160,10 +158,10 @@ export const RecordingForm: React.FC = () => {
                     <Button
                       colorPalette="brand"
                       size="lg"
-                      onClick={() => blob && handleUpload(blob)}
+                      onClick={() => audioBlob && handleUpload(audioBlob)}
                       loading={isUploading}
                       loadingText="Uploading..."
-                      disabled={!isNameValid || !blob}
+                      disabled={!isNameValid || !audioBlob}
                       w="full"
                     >
                       <FaUpload />

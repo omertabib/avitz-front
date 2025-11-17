@@ -1,5 +1,3 @@
-import { useTheme } from "@chakra-ui/react";
-
 export const useColorMode = () => {
   // In v3, color mode is handled differently
   // For now, we'll default to light mode

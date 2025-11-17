@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   VStack,
   HStack,
-  Input,
   Button,
   Card,
   Heading,
   Text,
   Spinner,
   Badge,
-  IconButton,
   SimpleGrid,
   Table,
   createToaster,
   Stat,
 } from "@chakra-ui/react";
-import { PasswordInput, PasswordStrengthMeter } from "./ui/password-input";
-import { FaPlay, FaUser, FaClock } from "react-icons/fa";
+import { PasswordInput } from "./ui/password-input";
+import { FaUser, FaClock } from "react-icons/fa";
 import axios from "axios";
 import { Recording } from "../types";
 import { useColorModeValue } from "./ui/color-mode";
