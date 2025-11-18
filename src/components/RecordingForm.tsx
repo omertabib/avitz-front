@@ -25,10 +25,10 @@ export const RecordingForm: React.FC = () => {
   const [name, setName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-
   const isNameValid = name.trim().length >= 2 && name.trim().length <= 50;
 
   const handleUpload = async (blob: Blob) => {
+    console.log(blob)
     if (!isNameValid) {
       toast.error({
         title: "Invalid name",
@@ -41,9 +41,11 @@ export const RecordingForm: React.FC = () => {
     const formData = new FormData();
     formData.append("name", name.trim());
     formData.append("audio", blob, "recording.webm");
-
+    console.log(formData.get("audio"))
     try {
-      await axios.post(`${API_URL}/api/upload`, formData, {
+      await axios.post(`${API_URL}/api/upload?name=${formData.get("name")}`, {
+        audio: formData.get("audio")
+      }, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
