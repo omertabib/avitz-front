@@ -46,7 +46,7 @@ function App() {
             <HStack justify="space-between" w="full">
               <HStack gap={3}>
                 {/*<FaMicrophone size={32} color="#2196f3" />*/}
-                <Image src={"../public/logo.jpeg"}
+                <Image src={"https://res.cloudinary.com/dhbxg1ivg/image/upload/v1763488342/logo_nkr4in.jpg"}
                        boxSize="100px"
                        borderRadius="full"
                        fit="contain"
