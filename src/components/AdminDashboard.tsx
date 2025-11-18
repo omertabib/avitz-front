@@ -19,12 +19,10 @@ import { FaUser, FaClock } from "react-icons/fa";
 import axios from "axios";
 import { Recording } from "../types";
 import { useColorModeValue } from "./ui/color-mode";
+import {toasterComp} from "./ui/toasterComp.ts";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-const toast = createToaster({
-  placement: "top",
-});
 
 export const AdminDashboard: React.FC = () => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
@@ -38,18 +36,19 @@ export const AdminDashboard: React.FC = () => {
   const fetchRecordings = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${API_URL}/api/admin/recordings`, {
+      const response = await axios.get(`${API_URL}/resource/recordings`, {
         headers: { Authorization: `Bearer ${password}` },
       });
       setRecordings(response.data.recordings);
       setIsAuthenticated(true);
-      toast.success({
-        title: "Welcome, Admin",
+      toasterComp.success({
+        title: "אהלן",
+        description: "ברוך הבא"
       });
     } catch (error) {
-      toast.error({
-        title: "Authentication failed",
-        description: "Invalid password",
+      toasterComp.error({
+        title: "הזדהות נכשלה",
+        description: "סיסמה שגויה",
       });
       setIsAuthenticated(false);
     } finally {
@@ -73,7 +72,7 @@ export const AdminDashboard: React.FC = () => {
       <Card.Root maxW="md" mx="auto" shadow="xl">
         <Card.Header>
           <Heading size="lg" textAlign="center">
-            Admin Login
+            התחברות לממשק ניהול
           </Heading>
         </Card.Header>
         <Card.Body>
@@ -81,9 +80,9 @@ export const AdminDashboard: React.FC = () => {
             <PasswordInput
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter admin password"
+              placeholder="הכנס סיסמת מנהל"
               size="lg"
-              onKeyPress={(e) => e.key === "Enter" && fetchRecordings()}
+              onKeyPress={(e) => e.key === "שלח" && fetchRecordings()}
             />
 
             <Button
@@ -91,10 +90,10 @@ export const AdminDashboard: React.FC = () => {
               size="lg"
               onClick={fetchRecordings}
               loading={loading}
-              loadingText="Authenticating..."
+              loadingText="רגע..."
               w="full"
             >
-              Login
+              התחברות
             </Button>
           </VStack>
         </Card.Body>
@@ -111,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
         <Card.Root bg={statBg}>
           <Card.Body>
             <Stat.Root>
-              <Stat.Label>Total Recordings</Stat.Label>
+              <Stat.Label>הקלטות</Stat.Label>
               <Stat.ValueText fontSize="2xl">
                 {recordings.length}
               </Stat.ValueText>
@@ -122,7 +121,7 @@ export const AdminDashboard: React.FC = () => {
         <Card.Root bg={statBg}>
           <Card.Body>
             <Stat.Root>
-              <Stat.Label>Total Duration</Stat.Label>
+              <Stat.Label>סך הכל אורך</Stat.Label>
               <Stat.ValueText fontSize="2xl">
                 {formatDuration(totalDuration)}
               </Stat.ValueText>
@@ -133,7 +132,7 @@ export const AdminDashboard: React.FC = () => {
         <Card.Root bg={statBg}>
           <Card.Body>
             <Stat.Root>
-              <Stat.Label>Total Storage</Stat.Label>
+              <Stat.Label>סך אחסון</Stat.Label>
               <Stat.ValueText fontSize="2xl">
                 {formatFileSize(totalSize)}
               </Stat.ValueText>
@@ -145,7 +144,7 @@ export const AdminDashboard: React.FC = () => {
       <Card.Root shadow="xl" bg={cardBg}>
         <Card.Header>
           <HStack justify="space-between">
-            <Heading size="md">All Recordings</Heading>
+            <Heading size="md">כל ההקלטות</Heading>
             <Button
               size="sm"
               onClick={fetchRecordings}
@@ -153,7 +152,7 @@ export const AdminDashboard: React.FC = () => {
               variant="outline"
             >
               <FaClock />
-              Refresh
+              רענן
             </Button>
           </HStack>
         </Card.Header>
@@ -167,11 +166,11 @@ export const AdminDashboard: React.FC = () => {
             <Table.Root>
               <Table.Header>
                 <Table.Row>
-                  <Table.ColumnHeader>Name</Table.ColumnHeader>
-                  <Table.ColumnHeader>Date & Time</Table.ColumnHeader>
-                  <Table.ColumnHeader>Duration</Table.ColumnHeader>
-                  <Table.ColumnHeader>Size</Table.ColumnHeader>
-                  <Table.ColumnHeader>Play</Table.ColumnHeader>
+                  <Table.ColumnHeader>שם</Table.ColumnHeader>
+                  <Table.ColumnHeader>תאריך & שעה</Table.ColumnHeader>
+                  <Table.ColumnHeader>אורך</Table.ColumnHeader>
+                  <Table.ColumnHeader>גודל</Table.ColumnHeader>
+                  <Table.ColumnHeader>הפעלה</Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -218,7 +217,7 @@ export const AdminDashboard: React.FC = () => {
 
           {recordings.length === 0 && !loading && (
             <Box textAlign="center" py={10}>
-              <Text color="gray.500">No recordings yet</Text>
+              <Text color="gray.500">אין הקלטות</Text>
             </Box>
           )}
         </Card.Body>

@@ -8,12 +8,15 @@ import {
   IconButton,
   HStack,
   Separator,
+  Toast, Toaster,
 } from "@chakra-ui/react";
+import {toasterComp} from "./components/ui/toasterComp.ts"
 import { FaMoon, FaSun, FaMicrophone } from "react-icons/fa";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { RecordingForm } from "./components/RecordingForm";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { useColorMode, useColorModeValue } from "./components/ui/color-mode";
+import {BsX} from "react-icons/bs";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -24,7 +27,19 @@ function App() {
 
   return (
     <Router>
+      <Toaster toaster={toasterComp} w={"md"} dir={"rtl"}>
+        {(toast) => (
+          <Toast.Root key={toast.id}>
+            <Toast.Title>{toast.title}</Toast.Title>
+            <Toast.Description>{toast.description}</Toast.Description>
+            <Toast.CloseTrigger>
+              <BsX />
+            </Toast.CloseTrigger>
+          </Toast.Root>
+        )}
+      </Toaster>
       <Box minH="100vh" bgGradient={bgGradient}>
+
         <Container maxW="container.xl" py={8}>
           <VStack gap={8}>
             {/* Header */}
@@ -60,21 +75,12 @@ function App() {
 
                     <RecordingForm />
 
-                    <Link to="/admin">
-                      <Text
-                        fontSize="sm"
-                        color="gray.500"
-                        _hover={{ color: "brand.500" }}
-                        textDecoration="underline"
-                      >
-                        ממשק ניהול →
-                      </Text>
-                    </Link>
+
                   </VStack>
                 }
               />
 
-              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/avitz" element={<AdminDashboard />} />
             </Routes>
           </VStack>
         </Container>

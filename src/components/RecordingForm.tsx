@@ -13,6 +13,7 @@ import {
 import { FaMicrophone, FaStop, FaUpload } from "react-icons/fa";
 import { ReactMediaRecorder } from "react-media-recorder";
 import axios from "axios";
+import {toasterComp} from "./ui/toasterComp.ts";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -28,11 +29,10 @@ export const RecordingForm: React.FC = () => {
   const isNameValid = name.trim().length >= 2 && name.trim().length <= 50;
 
   const handleUpload = async (blob: Blob) => {
-    console.log(blob)
     if (!isNameValid) {
-      toast.error({
-        title: "Invalid name",
-        description: "Name must be 2-50 characters",
+      toasterComp.error({
+        title: "שם לא תקין",
+        description: "אין מצב שככה קוראים לך",
       });
       return;
     }
@@ -41,7 +41,6 @@ export const RecordingForm: React.FC = () => {
     const formData = new FormData();
     formData.append("name", name.trim());
     formData.append("audio", blob, "recording.webm");
-    console.log(formData.get("audio"))
     try {
       const res = await axios.post(`${API_URL}/api/upload?name=${formData.get("name")}`, {
         audio: formData.get("audio")
@@ -49,10 +48,9 @@ export const RecordingForm: React.FC = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log(res)
 
       if(res.status == 200) {
-       toast.success({
+       toasterComp.success({
           title: "ישתבח!",
           description: "ההקלטה נשלחה בהצלחה",
         });
@@ -62,7 +60,7 @@ export const RecordingForm: React.FC = () => {
       }
 
     } catch (error: any) {
-      toast.error({
+      toasterComp.error({
         title: "איזה עצבים",
         description: error.response?.data?.detail || "עוד משהו התשבש",
       });
@@ -176,7 +174,7 @@ export const RecordingForm: React.FC = () => {
                   </VStack>
                 )}
 
-                {status === "recording" && <Box w="full">רגע..</Box>}
+                {status === "recording" && <Box w="full">מקליט..</Box>}
               </VStack>
             )}
           />
