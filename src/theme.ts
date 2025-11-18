@@ -23,8 +23,8 @@ const customConfig = defineConfig({
         },
       },
       fonts: {
-        heading: { value: "Inter, sans-serif" },
-        body: { value: "Inter, sans-serif" },
+        heading: { value: "Noto Sans Hebrew, sans-serif" },
+        body: { value: "Noto Sans Hebrew, sans-serif" },
       },
     },
   },
