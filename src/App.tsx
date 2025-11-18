@@ -8,7 +8,7 @@ import {
   IconButton,
   HStack,
   Separator,
-  Toast, Toaster,
+  Toast, Toaster, Image,
 } from "@chakra-ui/react";
 import {toasterComp} from "./components/ui/toasterComp.ts"
 import { FaMoon, FaSun, FaMicrophone } from "react-icons/fa";
@@ -45,7 +45,12 @@ function App() {
             {/* Header */}
             <HStack justify="space-between" w="full">
               <HStack gap={3}>
-                <FaMicrophone size={32} color="#2196f3" />
+                {/*<FaMicrophone size={32} color="#2196f3" />*/}
+                <Image src={"../public/logo.jpeg"}
+                       boxSize="100px"
+                       borderRadius="full"
+                       fit="contain"
+                />
                 <Heading size="lg">מוקד פריקת עצבים</Heading>
               </HStack>
 
