@@ -49,13 +49,13 @@ function App() {
                 <Heading size="lg">מוקד פריקת עצבים</Heading>
               </HStack>
 
-              <IconButton
-                aria-label="Toggle color mode"
-                onClick={toggleColorMode}
-                variant="ghost"
-              >
-                {colorMode === "light" ? <FaMoon /> : <FaSun />}
-              </IconButton>
+              {/*<IconButton*/}
+              {/*  aria-label="Toggle color mode"*/}
+              {/*  onClick={toggleColorMode}*/}
+              {/*  variant="ghost"*/}
+              {/*>*/}
+              {/*  {colorMode === "light" ? <FaMoon /> : <FaSun />}*/}
+              {/*</IconButton>*/}
             </HStack>
 
             <Separator />
