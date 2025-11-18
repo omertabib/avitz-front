@@ -43,24 +43,28 @@ export const RecordingForm: React.FC = () => {
     formData.append("audio", blob, "recording.webm");
     console.log(formData.get("audio"))
     try {
-      await axios.post(`${API_URL}/api/upload?name=${formData.get("name")}`, {
+      const res = await axios.post(`${API_URL}/api/upload?name=${formData.get("name")}`, {
         audio: formData.get("audio")
       }, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      toast.success({
-        title: "Success!",
-        description: "Your recording has been uploaded",
-      });
+      console.log(res)
 
-      // Reset form
-      setName("");
-      setAudioBlob(null);
+      if(res.status == 200) {
+       toast.success({
+          title: "ישתבח!",
+          description: "ההקלטה נשלחה בהצלחה",
+        });
+        // Reset form
+        setName("");
+        setAudioBlob(null);
+      }
+
     } catch (error: any) {
       toast.error({
-        title: "Upload failed",
-        description: error.response?.data?.detail || "Something went wrong",
+        title: "איזה עצבים",
+        description: error.response?.data?.detail || "עוד משהו התשבש",
       });
     } finally {
       setIsUploading(false);
@@ -72,15 +76,15 @@ export const RecordingForm: React.FC = () => {
       <Card.Body>
         <VStack gap={6}>
           <Field.Root invalid={name.length > 0 && !isNameValid}>
-            <Field.Label fontWeight="semibold">Your Name</Field.Label>
+            <Field.Label fontWeight="semibold">נו.. איך קוראים לך</Field.Label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
+              placeholder="להקליד כאן יאללה"
               size="lg"
             />
             <Field.ErrorText>
-              Name must be between 2-50 characters
+              בלי סתלבט.. אין מצב שהשם שלך ארוך יותר מ-50 או קצר יותר מ-2 תווים
             </Field.ErrorText>
           </Field.Root>
 
@@ -103,10 +107,10 @@ export const RecordingForm: React.FC = () => {
                     variant="subtle"
                   >
                     {status === "recording"
-                      ? "Recording..."
+                      ? "יאללה לפרוק..."
                       : status === "stopped"
-                      ? "Ready to upload"
-                      : "Ready to record"}
+                      ? "מוכן לשליחה"
+                      : "יאללה אפשר להקליט"}
                   </Badge>
                 </Box>
 
@@ -120,7 +124,7 @@ export const RecordingForm: React.FC = () => {
                     px={8}
                   >
                     <FaMicrophone />
-                    Record
+                    הקלטה
                   </Button>
 
                   <Button
@@ -132,7 +136,7 @@ export const RecordingForm: React.FC = () => {
                     px={8}
                   >
                     <FaStop />
-                    Stop
+                    עצירה
                   </Button>
                 </HStack>
 
@@ -162,17 +166,17 @@ export const RecordingForm: React.FC = () => {
                       size="lg"
                       onClick={() => audioBlob && handleUpload(audioBlob)}
                       loading={isUploading}
-                      loadingText="Uploading..."
+                      loadingText="שולח..."
                       disabled={!isNameValid || !audioBlob}
                       w="full"
                     >
                       <FaUpload />
-                      Submit Recording
+                      יאללה לשלוח
                     </Button>
                   </VStack>
                 )}
 
-                {status === "recording" && <Box w="full">Loading</Box>}
+                {status === "recording" && <Box w="full">רגע..</Box>}
               </VStack>
             )}
           />

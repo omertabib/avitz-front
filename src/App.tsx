@@ -31,7 +31,7 @@ function App() {
             <HStack justify="space-between" w="full">
               <HStack gap={3}>
                 <FaMicrophone size={32} color="#2196f3" />
-                <Heading size="lg">Voice Recorder</Heading>
+                <Heading size="lg">מוקד פריקת עצבים</Heading>
               </HStack>
 
               <IconButton
@@ -52,9 +52,9 @@ function App() {
                 element={
                   <VStack gap={8}>
                     <VStack gap={2} textAlign="center">
-                      <Heading size="xl">Share Your Voice</Heading>
+                      <Heading size="xl">נו מה קרה</Heading>
                       <Text color="gray.600" fontSize="lg">
-                        Record and submit your message in seconds
+                        תקליטו לי מה הכעיס אתכם.. או שאעזור או שאעמיק לכם את הכעס.. אני אחליט
                       </Text>
                     </VStack>
 
@@ -67,7 +67,7 @@ function App() {
                         _hover={{ color: "brand.500" }}
                         textDecoration="underline"
                       >
-                        Admin Login →
+                        ממשק ניהול →
                       </Text>
                     </Link>
                   </VStack>
